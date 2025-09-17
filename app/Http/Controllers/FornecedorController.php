@@ -58,7 +58,7 @@ class FornecedorController extends Controller
     public function show($id)
     {
 
-        $fornecedor = Fornecedor::find($id);
+        $fornecedor = Fornecedor::findOrFail($id);
 
         if (!$fornecedor) {
             return $this->errorResponse('Fornecedor não encontrado.', 404);

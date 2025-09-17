@@ -11,7 +11,7 @@ class FornecedorRequest extends FormRequest
 {
     public function rules()
     {
-        $fornecedorId = $this->route('fornecedore') ? $this->route('fornecedore') : null;
+        $fornecedorId = $this->route('fornecedore');
 
         return [
             'nome' => 'required|string|max:255',
@@ -37,11 +37,18 @@ class FornecedorRequest extends FormRequest
             'cnpj.required' => 'O campo CNPJ é obrigatório.',
             'cnpj.min' => 'O campo CNPJ deve ter pelo menos 14 caracteres.',
             'cnpj.max' => 'O campo CNPJ não deve ter mais de 18 caracteres.',
-            'cnpj.unique' => 'O cnpj já foi criado.',
-            'email.required' => 'O campo Email é obrigatório. ',
+            'cnpj.unique' => 'O CNPJ já foi cadastrado.',
             'email.email' => 'O campo Email deve ser um endereço válido.',
-            'email.string' => 'O campo de e-mail deve ser uma sequência de caracteres.',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->has('cnpj')) {
+            $this->merge([
+                'cnpj' => preg_replace('/[^0-9]/', '', $this->cnpj),
+            ]);
+        }
     }
 
     protected function failedValidation(Validator $validator)

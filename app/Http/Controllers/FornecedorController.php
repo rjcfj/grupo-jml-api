@@ -48,7 +48,7 @@ class FornecedorController extends Controller
      */
     public function store(FornecedorRequest $request)
     {
-        $fornecedor = $this->service->create($request->only(['nome', 'cnpj', 'email']));
+        $fornecedor = $this->service->create($request->validated());
         return $this->successResponse($fornecedor, 'Fornecedor criada com sucesso.');
     }
 
@@ -77,7 +77,7 @@ class FornecedorController extends Controller
             return $this->errorResponse('Fornecedor não encontrado', 404);
         }
 
-        $fornecedor = $this->service->update($fornecedor, $request->only(['nome', 'cnpj', 'email']));
+        $fornecedor = $this->service->update($fornecedor, $request->validated());
         return $this->successResponse($fornecedor, 'Fornecedor atualizada com sucesso.');
     }
 

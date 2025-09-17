@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Fornecedor;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\FornecedorRequest;
 use App\Services\FornecedorService;
 
@@ -51,6 +50,21 @@ class FornecedorController extends Controller
     {
         $fornecedor = $this->service->create($request->only(['nome', 'cnpj', 'email']));
         return $this->successResponse($fornecedor, 'Fornecedor criada com sucesso.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+
+        $fornecedor = Fornecedor::find($id);
+
+        if (!$fornecedor) {
+            return $this->errorResponse('Fornecedor não encontrado.', 404);
+        }
+
+        return $this->successResponse($fornecedor, 'Fornecedor encontrado.');
     }
 
     /**

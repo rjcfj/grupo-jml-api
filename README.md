@@ -1,61 +1,238 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://portal.jmlgrupo.com.br/" target="_blank">
+<img src="https://portal.jmlgrupo.com.br/wp-content/uploads/2024/09/logo_grupo_jml.svg" width="200" alt="jmlgrupo">
+</a>
 </p>
 
-## About Laravel
+# Grupo JML - Backend
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[![PHP](https://img.shields.io/badge/PHP-8.3-blue)](https://www.php.net/)  
+[![Laravel](https://img.shields.io/badge/Laravel-11-red)](https://laravel.com/)  
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-orange)](https://www.mysql.com/)  
+[![Docker](https://img.shields.io/badge/Docker-20%2B-lightblue)](https://www.docker.com/)  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**Desafio Fornecedor** - Backend para gerenciamento de Fornecedor.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Ambiente
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Componente | Versão |
+| ---------- | ------ |
+| PHP        | 8.2+   |
+| Laravel    | 12+    |
+| MySQL      | 8.0    |
+| Docker     | 28+    |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setup do Projeto
 
-## Laravel Sponsors
+### 1. Clonar o repositório
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+git clone https://github.com/rjcfj/grupo-jml-api.git -b main
+cd techpines
+```
 
-### Premium Partners
+### 1. Clonar o repositório
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+git clone https://github.com/rjcfj/grupo-jml-api.git -b main
+cd techpines
+```
 
-## Contributing
+### 2. Iniciar Docker
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+docker compose up -d --build
+```
 
-## Code of Conduct
+> Sobe serviços PHP, MySQL em background.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Configurar para que as migrations e seeders sejam executados automaticamente no Docker
 
-## Security Vulnerabilities
+### 3. Acessar servidores
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Backend:** `http://localhost:8001`  
 
-## License
+> As portas podem variar conforme configuração do Docker Compose.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## Endpoints da API
+
+### 1. Listar Fornecedor
+
+| Método | Endpoint            | Descrição                             |
+| ------ | ------------------- | ------------------------------------- |
+| GET    | `/api/fornecedores` | Lista todas as fornecedor disponíveis |
+
+**Response Exemplo:**
+
+```json
+[
+  {
+    "id": 1,
+    "nome": "Ricardo",
+    "cnpj": "12345678000195",
+    "email": null,
+    "deleted_at": null,
+    "created_at": "2025-09-17T18:17:56.000000Z",
+    "updated_at": "2025-09-17T18:17:56.000000Z"
+  }
+]
+```
+
+---
+
+### 2. Listar Fornecedor por nome
+
+| Método | Endpoint                         | Descrição                 |
+| ------ | -------------------------------- | ------------------------- |
+| GET    | `/api/fornecedores?nome=ricardo` | Lista fornecedor por nome |
+
+**Parâmetros:**
+
+- `?nome=ricardo` → Nome da Fornecedor
+
+
+**Response Exemplo:**
+
+```json
+{
+    "success": true,
+    "message": "Fornecedor encontrado.",
+    "data": {
+        "id": 5,
+        "nome": "Ricardo",
+        "cnpj": "12345678000195",
+        "email": null,
+        "deleted_at": null,
+        "created_at": "2025-09-17T19:38:18.000000Z",
+        "updated_at": "2025-09-17T19:38:18.000000Z"
+    }
+}
+```
+
+### 3. Salvar Fornecedor
+
+| Método | Endpoint             | Descrição                                     |
+| ------ | -------------------- | --------------------------------------------- |
+| POST   | `/api/fornecedores/` | Salva os dados de uma fornecedor |
+
+**Request Body:** *(objeto JSON)*
+
+```json
+{
+  "nome": "Ricardo",
+  "cnpj": "12345678000195",
+  "email": ""
+}
+```
+
+**Response Exemplo:**
+
+```json
+{
+  "success": true,
+    "message": "Fornecedor criada com sucesso.",
+    "data": {
+        "nome": "Ricardo",
+        "cnpj": "12345678000195",
+        "email": null,
+        "updated_at": "2025-09-17T18:17:56.000000Z",
+        "created_at": "2025-09-17T18:17:56.000000Z",
+        "id": 1
+    }
+}
+```
+
+---
+
+### 6. Atualizar Fornecedor
+
+| Método | Endpoint                    | Descrição                           |
+| ------ | --------------------------- | ----------------------------------- |
+| PUT    | `/api/fornecedores/:codigo` | Atualiza os dados de uma fornecedor |
+
+**Parâmetros:**
+
+- `:codigo` → Código da Fornecedor
+
+**Request Body:** *(objeto JSON)*
+
+```json
+{
+  "nome": "Ricardo Junior",
+  "cnpj": "12345678000195",
+  "email": "ricardojcfj@email.com"
+}
+```
+
+**Response Exemplo:**
+
+```json
+{
+  "success": true,
+    "message": "Fornecedor atualizada com sucesso.",
+    "data": {
+        "id": 5,
+        "nome": "Ricardo Junior",
+        "cnpj": "12345678000195",
+        "email": "ricardojcfj@email.com",
+        "deleted_at": null,
+        "created_at": "2025-09-17T19:38:18.000000Z",
+        "updated_at": "2025-09-17T19:55:50.000000Z"
+    }
+}
+```
+
+---
+
+### 7. Excluir Fornecedor
+
+| Método | Endpoint                    | Descrição                      |
+| ------ | --------------------------- | ------------------------------ |
+| DELETE | `/api/fornecedores/:codigo` | Exclui uma fornecedor          |
+
+**Parâmetros:**
+
+- `:codigo` → Código da Fornecedor
+
+
+**Response Exemplo:**
+
+```json
+{
+    "success": true,
+    "message": "Success",
+    "data": "Fornecedor excluída com sucesso."
+}
+```
+
+---
+
+## 📦 Testes (Unit)
+
+```php
+  docker exec -it jml-backend php artisan test
+
+```
+
+---
+
+## 📝 Boas Práticas
+
+- Utilize **Postman** ou **Insomnia** para testar a API rapidamente.  
+- Padronize os formatos JSON (objetos) em requests de POST/PUT para consistência.
+
+---
+
+## 📂 Links Úteis
+
+- [Postman](https://www.postman.com/)  
+- [Insomnia](https://insomnia.rest/)
+
+---
+

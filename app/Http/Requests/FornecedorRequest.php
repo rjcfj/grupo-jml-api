@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Rules\CnpjValido;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class FornecedorRequest extends FormRequest
 {
@@ -40,5 +42,14 @@ class FornecedorRequest extends FormRequest
             'email.email' => 'O campo Email deve ser um endereço válido.',
             'email.string' => 'O campo de e-mail deve ser uma sequência de caracteres.',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Erro de validação',
+            'errors'  => $validator->errors()
+        ], 422));
     }
 }
